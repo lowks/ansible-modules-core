@@ -1,48 +1,65 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-DOCUMENTATION = """
----
-module: conda
-short_description: Manage Python libraries via conda
-description:
-  >
-    Manage Python libraries via conda.
-    Can install, update, and remove packages.
-author: Synthicity
-notes:
-  >
-    Requires conda to already be installed.
-    Will look under the home directory for a conda executable.
-options:
-  name:
-    description: The name of a Python library to install
-    required: true
-    default: null
-  version:
-    description: A specific version of a library to install
-    required: false
-    default: null
-  state:
-    description: State in which to leave the Python package
-    required: false
-    default: present
-    choices: [ "present", "absent", "latest" ]
-  channels:
-    description: Extra channels to use when installing packages
-    required: false
-    default: null
-  executable:
-    description: Full path to the conda executable
-    required: false
-    default: null
-  extra_args:
-    description: Extra arguments passed to conda
-    required: false
-    default: null
-"""
+# (c) 2016, Low Kian Seong <kianseong@gmail.com>
+#
+# This file is part of Ansible
+#
+# Ansible is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Ansible is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
+#
 
-EXAMPLES = """
+
+DOCUMENTATION = ''' 
+--- 
+author: Synthicity
+description: 
+  - "Manage Python libraries via conda. Can install, update, and remove packages."
+  - "Requires conda to already be installed. Will look under the home directory for a conda executable."
+module: conda
+options: 
+  channels: 
+    default: ~
+    description: "Extra channels to use when installing packages"
+    required: false
+  executable: 
+    default: ~
+    description: "Full path to the conda executable"
+    required: false
+  extra_args: 
+    default: ~
+    description: "Extra arguments passed to conda"
+    required: false
+  name: 
+    default: ~
+    description: "The name of a Python library to install"
+    required: true
+  state: 
+    choices: 
+      - present
+      - absent
+      - latest
+    default: present
+    description: "State in which to leave the Python package"
+    required: false
+  version: 
+    default: ~
+    description: "A specific version of a library to install"
+    required: false
+version_added: "2.2"
+'''
+
+EXAMPLES = ''' 
 - name: install numpy via conda
   conda: name=numpy state=latest
 
@@ -51,7 +68,24 @@ EXAMPLES = """
 
 - name: remove matplotlib from conda
   conda: name=matplotlib state=absent
-"""
+'''
+
+RETURN = ''' 
+name: 
+  description: name of the package returned. success, in some cases
+  type: string
+  sample: pyhamcrest
+stdout:
+    description: output from conda
+    returned: success, when needed
+    type: string
+    sample: "All requested packages already installed."
+stderr:
+    description: error output from apt
+    returned: success, when needed
+    type: string
+    sample: "Package missing in current linux-64 channels"
+'''
 
 from distutils.spawn import find_executable
 import os.path
