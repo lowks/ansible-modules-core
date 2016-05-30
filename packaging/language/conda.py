@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# (c) 2016, Low Kian Seong <kianseong@gmail.com>
+# (c) 2016, Urban Data Science Toolkit <udst@urbansim.com>
 #
 # This file is part of Ansible
 #
@@ -20,46 +20,46 @@
 #
 
 
-DOCUMENTATION = ''' 
---- 
+DOCUMENTATION = '''
+---
 author: Synthicity
-description: 
+description:
   - "Manage Python libraries via conda. Can install, update, and remove packages."
   - "Requires conda to already be installed. Will look under the home directory for a conda executable."
 module: conda
-options: 
-  channels: 
+options:
+  channels:
     default: ~
     description: "Extra channels to use when installing packages"
     required: false
-  executable: 
+  executable:
     default: ~
     description: "Full path to the conda executable"
     required: false
-  extra_args: 
+  extra_args:
     default: ~
     description: "Extra arguments passed to conda"
     required: false
-  name: 
+  name:
     default: ~
     description: "The name of a Python library to install"
     required: true
-  state: 
-    choices: 
+  state:
+    choices:
       - present
       - absent
       - latest
     default: present
     description: "State in which to leave the Python package"
     required: false
-  version: 
+  version:
     default: ~
     description: "A specific version of a library to install"
     required: false
 version_added: "2.2"
 '''
 
-EXAMPLES = ''' 
+EXAMPLES = '''
 - name: install numpy via conda
   conda: name=numpy state=latest
 
@@ -70,8 +70,8 @@ EXAMPLES = '''
   conda: name=matplotlib state=absent
 '''
 
-RETURN = ''' 
-name: 
+RETURN = '''
+name:
   description: name of the package returned. success, in some cases
   type: string
   sample: pyhamcrest
